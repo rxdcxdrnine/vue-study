@@ -1,8 +1,8 @@
 <template>
   <section>
-    <ul>
+    <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, index) in todoItems"
+        v-for="(todoItem, index) in propsData"
         class="shadow"
         :key="todoItem.item"
       >
@@ -18,38 +18,20 @@
           <i class="removeBtn fas fa-trash-alt"></i>
         </span>
       </li>
-    </ul>
+    </transition-group>
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      todoItems: [],
-    };
-  },
+  props: ["propsData"],
   methods: {
     removeTodo(todoItem, index) {
-      this.todoItems.splice(index, 1);
-      localStorage.removeItem(todoItem);
+      this.$store.commit("removeOneItem", { todoItem, index });
     },
-    toggleComplete(todoItem) {
-      todoItem.completed = !todoItem.completed;
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    toggleComplete(todoItem, index) {
+      this.$store.commit("toggleOneItem", { todoItem, index });
     },
-  },
-  created() {
-    if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
-          this.todoItems.push(
-            JSON.parse(localStorage.getItem(localStorage.key(i)))
-          );
-        }
-      }
-    }
   },
 };
 </script>
@@ -86,5 +68,17 @@ li {
 .removeBtn {
   margin-left: auto;
   color: #de4343;
+}
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter-from , .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>

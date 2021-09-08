@@ -4,22 +4,41 @@
     <span class="addContainer" @click="addTodo">
       <i class="addBtn fas fa-plus" aria-hidden="true"></i>
     </span>
+
+    <modal v-if="showModal" @close="showModal = false">
+      <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+      <template v-slot:header>
+        경고!
+        <i class="closeModalBtn fas fa-times" @click="showModal = false"></i>
+      </template>
+      <template v-slot:body>아무것도 입력하지 않으셨습니다.</template>
+    </modal>
   </div>
 </template>
 
 <script>
+import Modal from "./common/Modal.vue";
+
 export default {
+  components: {
+    Modal,
+  },
   data() {
     return {
       newTodoItem: "",
+      showModal: false,
     };
   },
   methods: {
     addTodo() {
       if (this.newTodoItem !== "") {
-        var obj = { completed: false, item: this.newTodoItem };
-        localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
+        this.$store.commit("addOneItem", this.newTodoItem);
         this.clearInput();
+      } else {
+        this.showModal = !this.showModal;
       }
     },
     clearInput() {
@@ -53,5 +72,8 @@ input:focus {
 .addBtn {
   color: white;
   vertical-align: middle;
+}
+.closeModalBtn {
+  color: #42b983;
 }
 </style>

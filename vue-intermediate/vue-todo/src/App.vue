@@ -2,31 +2,31 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput></TodoInput>
-    <TodoList></TodoList>
-    <TodoFooter></TodoFooter>
+    <TodoList :propsData="$store.state.todoItems"></TodoList>
+    <TodoFooter @clearAll="clearAllItems"></TodoFooter>
   </div>
 </template>
 
 <script>
-import TodoHeader from './components/TodoHeader.vue'
-import TodoInput from './components/TodoInput.vue'
-import TodoList from './components/TodoList.vue'
-import TodoFooter from './components/TodoFooter.vue'
+import TodoHeader from "./components/TodoHeader.vue";
+import TodoInput from "./components/TodoInput.vue";
+import TodoList from "./components/TodoList.vue";
+import TodoFooter from "./components/TodoFooter.vue";
 
 export default {
   components: {
     TodoHeader: TodoHeader,
     TodoInput: TodoInput,
     TodoList: TodoList,
-    TodoFooter: TodoFooter
-  }  
-}
+    TodoFooter: TodoFooter,
+  },
+};
 </script>
 
 <style>
 body {
   text-align: center;
-  background-color: #F6F6F8;
+  background-color: #f6f6f8;
 }
 input {
   border-style: groove;
@@ -36,6 +36,6 @@ button {
   border-style: groove;
 }
 .shadow {
-  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03)
+  box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.03);
 }
 </style>
