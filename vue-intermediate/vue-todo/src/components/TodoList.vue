@@ -2,19 +2,19 @@
   <section>
     <transition-group name="list" tag="ul">
       <li
-        v-for="(todoItem, index) in propsData"
+        v-for="(todoItem, index) in this.storedTodoItems"
         class="shadow"
         :key="todoItem.item"
       >
         <i
           class="checkBtn fas fa-check"
           :class="{ checkBtnCompleted: todoItem.completed }"
-          @click="toggleComplete(todoItem, index)"
+          @click="toggleComplete({ todoItem, index })"
         ></i>
         <span :class="{ textCompleted: todoItem.completed }">
           {{ todoItem.item }}
         </span>
-        <span class="removeBtn" @click="removeTodo(todoItem, index)">
+        <span class="removeBtn" @click="removeTodo({ todoItem, index })">
           <i class="removeBtn fas fa-trash-alt"></i>
         </span>
       </li>
@@ -23,15 +23,17 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
+
 export default {
-  props: ["propsData"],
   methods: {
-    removeTodo(todoItem, index) {
-      this.$store.commit("removeOneItem", { todoItem, index });
-    },
-    toggleComplete(todoItem, index) {
-      this.$store.commit("toggleOneItem", { todoItem, index });
-    },
+    ...mapMutations({
+      removeTodo: "removeOneItem",
+      toggleComplete: "toggleOneItem",
+    }),
+  },
+  computed: {
+    ...mapGetters(["storedTodoItems"]),
   },
 };
 </script>
@@ -75,7 +77,7 @@ li {
 }
 .list-enter-active,
 .list-leave-active {
-  transition: all 1s;
+  transition: all 0.5s;
 }
 .list-enter-from , .list-leave-to /* .list-leave-active below version 2.1.8 */ {
   opacity: 0;

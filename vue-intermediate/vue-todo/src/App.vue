@@ -2,8 +2,8 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput></TodoInput>
-    <TodoList :propsData="$store.state.todoItems"></TodoList>
-    <TodoFooter @clearAll="clearAllItems"></TodoFooter>
+    <TodoList></TodoList>
+    <TodoFooter></TodoFooter>
   </div>
 </template>
 
