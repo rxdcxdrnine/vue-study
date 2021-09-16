@@ -16,6 +16,7 @@ const config = {
 //   return axios.get(`${config.baseUrl}/news/1.json`);
 // };
 
+// promise
 const fetchList = (pageName) => {
   return axios.get(`${config.baseUrl}/${pageName}/1.json`);
 };
@@ -28,6 +29,16 @@ const fetchItemInfo = (itemId) => {
   return axios.get(`${config.baseUrl}/item/${itemId}.json`);
 };
 
+// async
+const fetchListAsync = async (pageName) => {
+  try {
+    const res = axios.get(`${config.baseUrl}/${pageName}/1.json`);
+    return res;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export {
   // fetchAskList,
   // fetchJobsList,
@@ -35,4 +46,5 @@ export {
   fetchUserInfo,
   fetchItemInfo,
   fetchList,
+  fetchListAsync,
 };

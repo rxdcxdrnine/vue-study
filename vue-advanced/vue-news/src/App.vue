@@ -1,11 +1,12 @@
 <template>
   <div id="app">
     <tool-bar />
-    <router-view v-slot="{ Component }">
+    <router-view />
+    <!-- <router-view v-slot="{ Component }">
       <transition name="page" :before-enter="beforeEnter">
         <component :is="Component" />
       </transition>
-    </router-view>
+    </router-view> -->
     <spinner :loading="loadingStatus" />
   </div>
 </template>
@@ -13,14 +14,12 @@
 <script>
 import ToolBar from "./components/ToolBar.vue";
 import Spinner from "./components/Spinner.vue";
-import ListMixin from "./mixins/ListMixin";
 
 export default {
   components: {
     ToolBar,
     Spinner,
   },
-  mixins: [ListMixin],
   data() {
     return {
       loadingStatus: false,

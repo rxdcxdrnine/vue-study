@@ -5,6 +5,7 @@ import {
   fetchList,
   fetchItemInfo,
   fetchUserInfo,
+  fetchListAsync,
 } from "../../../api";
 
 export default {
@@ -26,6 +27,8 @@ export default {
   //     })
   //     .catch((err) => console.error(err));
   // },
+
+  // promise
   FETCH_LIST({ commit }, pageName) {
     return fetchList(pageName)
       .then(({ data }) => commit("SET_LIST", data))
@@ -40,5 +43,11 @@ export default {
     return fetchItemInfo(itemId)
       .then(({ data }) => commit("SET_ITEM", data))
       .catch((err) => console.error(err));
+  },
+
+  // async
+  async FETCH_LIST_ASYNC({ commit }, pageName) {
+    const { data } = await fetchListAsync(pageName);
+    commit("SET_LIST", data);
   },
 };
